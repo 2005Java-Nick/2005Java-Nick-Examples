@@ -1,2 +1,3 @@
 Here is some sample test
-Another person edited this file. Added Remotely.
+
+Another person edited this file. Added locally to this line
