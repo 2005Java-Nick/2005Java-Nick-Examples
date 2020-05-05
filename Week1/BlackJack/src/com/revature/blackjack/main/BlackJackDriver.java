@@ -1,7 +1,6 @@
 package com.revature.blackjack.main;
 
 import java.util.Scanner;
-
 /*
  * Example Game:
  *  - dealer shuffles cards
@@ -15,7 +14,6 @@ import java.util.Scanner;
  *  - winner is decided by highest number, not over 21
  *  - dealer wins on a tie
  */
-
 /*
  * BlackJack MVP:
  *  - can take input from user hit(take another card) or stay(end game)
@@ -26,32 +24,32 @@ import java.util.Scanner;
  *  - compare to dealers score
  */
 public class BlackJackDriver {
-
 	// We want to encapsulate our variables inside our classes.
 	private static Scanner scan = new Scanner(System.in);
 
 	private int playerScore = 0;
-
 	private int[] hand = new int[14];
-
 	private int dealerScore = 0;
-
 	private int[] dealerHand = new int[13];
 
 	private static final int LOW_CARD_VALUE = 1;
-
 	private static final int HIGH_CARD_VALUE = 11;
-
+	
+	private static BlackJackDriver bjd;
+	
+	private int handIndex;	
+	private int dealerHandIndex; // keep track of position in dealer hand to add new card
 	// Static - belongs to the class
 	public static void main(String[] args) {
-		/*
-		 * BlackJackDriver bjd = new BlackJackDriver(); bjd.playerScore++;
-		 * System.out.println("BJD " + bjd.playerScore); BlackJackDriver bjd2 = new
-		 * BlackJackDriver(); System.out.println("BJD2 " + bjd2.playerScore);
-		 */
-
-		BlackJackDriver bjd = new BlackJackDriver();
-		// Deal Players Hand
+		
+		bjd = new BlackJackDriver();
+		 bjd.dealHands();
+		bjd.checkBlackJack();
+	}
+			
+	private void dealHands() {		
+		// Deal Players Hand                  
+		//dealPlayerHand();
 		// generating a random number from 1 to 11
 		Double card1 = ((Math.random() * HIGH_CARD_VALUE) + LOW_CARD_VALUE);
 		bjd.hand[0] = card1.intValue();
@@ -74,66 +72,72 @@ public class BlackJackDriver {
 		System.out.println("Dealer showing: ");
 		System.out.println(bjd.dealerHand[0]);
 		System.out.println("?");
+	}	
+	private void calcPlayerScore() {
+		bjd.playerScore = 0;
+		for (int i = 0; i < bjd.hand.length; i++) {
+			bjd.playerScore += bjd.hand[i];
+		}
 
+	}
+	private void calcDealerScore() {
+		bjd.dealerScore = 0;
+		for (int i = 0; i < bjd.dealerHand.length; i++) {
+			bjd.dealerScore += bjd.dealerHand[i];
+		}
+	}
+	private void showPlayerHand() {
+		System.out.println("Players hand: ");
+		for (int i = 0; i < handIndex; i++) {
+			System.out.println(bjd.hand[i]);
+		}
+	}	
+	private void showDealerHand() {
+		System.out.println("Dealers hand: ");
+		for (int i = 0; i < 2; i++) {
+			System.out.println(bjd.dealerHand[i]);
+		}
+	}
+	private void checkBlackJack() {
 		// check BlackJack
 		if (bjd.hand[0] + bjd.hand[1] == 21) {
 			System.out.println("BLACKJACK!!!! PLAYER WINs!!!!");
 		} else {
 			System.out.println("Hit or Stay");
 			String hitOrStay = scan.nextLine();
-			int handIndex = 2; // keep track of position in player hand to add new card
+			handIndex = 2;
 			while (bjd.playerScore < 21 && hitOrStay.equals("hit")) {
 				// Deal Player New card
 				// generating a random number from 1 to 11
+				
 				Double newCard = ((Math.random() * HIGH_CARD_VALUE) + LOW_CARD_VALUE);
 				bjd.hand[handIndex] = newCard.intValue();
 				handIndex++;
 
 				// Show player their hand
-				System.out.println("Players hand: ");
-				for (int i = 0; i < handIndex; i++) {
-					System.out.println(bjd.hand[i]);
-				}
+				showPlayerHand();
 
 				// calculate players score
-				bjd.playerScore = 0;
-				for (int i = 0; i < bjd.hand.length; i++) {
-					bjd.playerScore += bjd.hand[i];
-				}
-
+				calcPlayerScore();
+			
 				if (bjd.playerScore > 21) {
 
 					System.out.println("BUST");
 
 				} else {
-
+					
 					System.out.println("Hit or Stay");
 					hitOrStay = scan.nextLine();
-
 				}
-
 			}
-
 			// calculate players score
 			// Recalculating in case the player did not hit
-			bjd.playerScore = 0;
-			for (int i = 0; i < bjd.hand.length; i++) {
-				bjd.playerScore += bjd.hand[i];
-			}
-
+			calcPlayerScore();
 			// calculate dealers score
-			bjd.dealerScore = 0;
-			for (int i = 0; i < bjd.dealerHand.length; i++) {
-				bjd.dealerScore += bjd.dealerHand[i];
-			}
-
+			calcDealerScore();
 			// Show dealers hand
-			System.out.println("Dealers hand: ");
-			for (int i = 0; i < 2; i++) {
-				System.out.println(bjd.dealerHand[i]);
-			}
+			showDealerHand();
 			
-			int dealerHandIndex = 2; // keep track of position in dealer hand to add new card
 			while (bjd.dealerScore < 17) {
 				// Dealer hits
 				// Deal Dealer New card
@@ -143,18 +147,11 @@ public class BlackJackDriver {
 				dealerHandIndex++;
 				
 				// calculate dealers score
-				bjd.dealerScore = 0;
-				for (int i = 0; i < bjd.dealerHand.length; i++) {
-					bjd.dealerScore += bjd.dealerHand[i];
-				}
+				calcDealerScore();
 				
 				// Show dealers hand
-				System.out.println("Dealers hand: ");
-				for (int i = 0; i < dealerHandIndex; i++) {
-					System.out.println(bjd.dealerHand[i]);
-				}
+				showDealerHand();
 			}
-			
 			System.out.println("Player score: " + bjd.playerScore);
 
 			System.out.println("Dealer's Score: " + bjd.dealerScore);
@@ -166,13 +163,5 @@ public class BlackJackDriver {
 			}
 
 		}
-
 	}
-
-	/*
-	 * private void methodA() { int intA = 5; }
-	 * 
-	 * private void methodB() { //Out of Scope //intA = 7; }
-	 */
-
 }
