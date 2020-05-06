@@ -5,28 +5,47 @@ import java.util.Arrays;
 //What is an object? instance variables and methods
 //State and Behavior
 public class Player {
-	
+
 	private int[] hand;
-	
+
 	private int score;
-	
+
 	private String playerName;
-	
-	//possibly will need to add an index to add cards to the hand
-	//future improvements: bet/wallet/win%
-	
+
+	// Player Logic
+	public void drawCard(int index, int card) {
+		this.getHand()[index] = card;
+		calculateScore(card);
+	}
+
+	private void calculateScore(int card) {
+		this.setScore(this.getScore() + card);
+	}
+
+	public String showHand() {
+		String displayHand = "";
+		for (int card: this.getHand()) {
+			displayHand += card;
+			displayHand += ":";
+		}
+		return displayHand;
+	}
+
+	// possibly will need to add an index to add cards to the hand
+	// future improvements: bet/wallet/win%/skipping or joining game
+
 	public Player() {
-		//first line?
-		//always super() or this()
-		//super(); implicitly
+		// first line?
+		// always super() or this()
+		// super(); implicitly
 		this.hand = new int[13];
 		this.score = 0;
-		this.playerName = "Player" + Math.random()*100;
+		this.playerName = "Player" + Math.random() * 100;
 	}
-	
+
 	public Player(String playerName, int score, int[] hand) {
 		this();
-		//super();
+		// super();
 		this.playerName = playerName;
 		this.score = score;
 		this.hand = hand;
@@ -42,9 +61,10 @@ public class Player {
 		return result;
 	}
 
-	//HashCode Equals Contract: all objects that are equal must have the same hashCode
-	//Not all objects that have the same hashCode, are required to be equal
-	//Collision
+	// HashCode Equals Contract: all objects that are equal must have the same
+	// hashCode
+	// Not all objects that have the same hashCode, are required to be equal
+	// Collision
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -65,28 +85,30 @@ public class Player {
 			return false;
 		return true;
 	}
-	
+
 	public void setPlayerName(String playerName) {
 		this.playerName = playerName;
 	}
-	
+
 	public String getPlayerName() {
 		return this.playerName;
 	}
-	
-	public void setScore(int score) {
-		this.score = score;
+
+	private void setScore(int score) {
+		if (score >= 0) {
+			this.score = score;
+		}
 	}
-	
+
 	public int getScore() {
 		return this.score;
 	}
-	
-	public int[] getHand() {
+
+	private int[] getHand() {
 		return hand;
 	}
 
-	public void setHand(int[] hand) {
+	private void setHand(int[] hand) {
 		this.hand = hand;
 	}
 
@@ -94,7 +116,5 @@ public class Player {
 	public String toString() {
 		return "Player [hand=" + Arrays.toString(hand) + ", score=" + score + ", playerName=" + playerName + "]";
 	}
-	
-	
 
 }
