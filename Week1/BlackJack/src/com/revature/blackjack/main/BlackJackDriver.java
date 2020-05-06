@@ -41,6 +41,11 @@ public class BlackJackDriver {
 	private static final int LOW_CARD_VALUE = 1;
 
 	private static final int HIGH_CARD_VALUE = 11;
+	
+	//This method generates a random int 1-11
+	private static int generateValue() {
+		return (int) ((Math.random() * HIGH_CARD_VALUE) + LOW_CARD_VALUE);
+	};
 
 	// Static - belongs to the class
 	public static void main(String[] args) {
@@ -53,11 +58,11 @@ public class BlackJackDriver {
 		BlackJackDriver bjd = new BlackJackDriver();
 		// Deal Players Hand
 		// generating a random number from 1 to 11
-		Double card1 = ((Math.random() * HIGH_CARD_VALUE) + LOW_CARD_VALUE);
-		bjd.hand[0] = card1.intValue();
+		int card1 = generateValue();
+		bjd.hand[0] = card1;
 		// generating a random number from 1 to 11
-		Double card2 = ((Math.random() * HIGH_CARD_VALUE) + LOW_CARD_VALUE);
-		bjd.hand[1] = card2.intValue();
+		int card2 = generateValue();
+		bjd.hand[1] = card2;
 		// Show player their hand
 		System.out.println("Players hand: ");
 		System.out.println(bjd.hand[0]);
@@ -65,11 +70,11 @@ public class BlackJackDriver {
 
 		// Dealers Hand
 		// generating a random number from 1 to 11
-		Double dealerCard1 = ((Math.random() * HIGH_CARD_VALUE) + LOW_CARD_VALUE);
-		bjd.dealerHand[0] = dealerCard1.intValue();
+		int dealerCard1 = generateValue();
+		bjd.dealerHand[0] = dealerCard1;
 		// generating a random number from 1 to 11
-		Double dealerCard2 = ((Math.random() * HIGH_CARD_VALUE) + LOW_CARD_VALUE);
-		bjd.dealerHand[1] = dealerCard2.intValue();
+		int dealerCard2 = generateValue();
+		bjd.dealerHand[1] = dealerCard2;
 		// Show player their hand
 		System.out.println("Dealer showing: ");
 		System.out.println(bjd.dealerHand[0]);
@@ -85,8 +90,8 @@ public class BlackJackDriver {
 			while (bjd.playerScore < 21 && hitOrStay.equals("hit")) {
 				// Deal Player New card
 				// generating a random number from 1 to 11
-				Double newCard = ((Math.random() * HIGH_CARD_VALUE) + LOW_CARD_VALUE);
-				bjd.hand[handIndex] = newCard.intValue();
+				int newCard = generateValue();
+				bjd.hand[handIndex] = newCard;
 				handIndex++;
 
 				// Show player their hand
@@ -116,7 +121,7 @@ public class BlackJackDriver {
 
 			// calculate players score
 			// Recalculating in case the player did not hit
-			bjd.playerScore = 0;
+			bjd.playerScore = 0; 
 			for (int i = 0; i < bjd.hand.length; i++) {
 				bjd.playerScore += bjd.hand[i];
 			}
@@ -138,14 +143,20 @@ public class BlackJackDriver {
 				// Dealer hits
 				// Deal Dealer New card
 				// generating a random number from 1 to 11
-				Double newDealerCard = ((Math.random() * HIGH_CARD_VALUE) + LOW_CARD_VALUE);
-				bjd.dealerHand[dealerHandIndex] = newDealerCard.intValue();
+				int newDealerCard = generateValue();
+				bjd.dealerHand[dealerHandIndex] = newDealerCard;
 				dealerHandIndex++;
 				
 				// calculate dealers score
 				bjd.dealerScore = 0;
 				for (int i = 0; i < bjd.dealerHand.length; i++) {
-					bjd.dealerScore += bjd.dealerHand[i];
+					bjd.dealerScore += bjd.dealerHand[i];}
+				
+				}
+				
+				//win check
+				if(bjd.dealerScore > 21) {
+				System.out.println("Player Wins");
 				}
 				
 				// Show dealers hand
@@ -161,6 +172,7 @@ public class BlackJackDriver {
 
 			if (bjd.playerScore > bjd.dealerScore && bjd.playerScore <= 21) {
 				System.out.println("Player Wins");
+				
 			} else {
 				System.out.println("Dealer Wins");
 			}
@@ -174,5 +186,3 @@ public class BlackJackDriver {
 	 * 
 	 * private void methodB() { //Out of Scope //intA = 7; }
 	 */
-
-}
