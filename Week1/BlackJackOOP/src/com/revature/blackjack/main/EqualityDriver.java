@@ -8,10 +8,9 @@ public class EqualityDriver {
 		// TODO Auto-generated method stub
 		Player p1 = new Player();
 		Player p2 = new Player();
-		p1.setPlayerName("Nick");
-		p2.setPlayerName("Nick");
-		p1.setScore(10);
-		p2.setScore(10);
+		p1.setName("Nick");
+		p2.setName("Nick");
+
 		System.out.println(p1);
 		System.out.println(p2);
 		
@@ -23,7 +22,7 @@ public class EqualityDriver {
 		
 		Player p3 = p2;
 		
-		p3.setPlayerName("Anastasia");
+		p3.setName("Anastasia");
 		System.out.println(p2);
 		System.out.println(p3==p2);
 	}

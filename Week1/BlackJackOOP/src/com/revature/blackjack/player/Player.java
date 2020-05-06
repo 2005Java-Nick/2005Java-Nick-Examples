@@ -10,7 +10,7 @@ public class Player {
 
 	private int score;
 
-	private String playerName;
+	private String name;
 
 	// Player Logic
 	public void drawCard(int index, int card) {
@@ -40,13 +40,13 @@ public class Player {
 		// super(); implicitly
 		this.hand = new int[13];
 		this.score = 0;
-		this.playerName = "Player" + Math.random() * 100;
+		this.name = "Player" + Math.random() * 100;
 	}
 
-	public Player(String playerName, int score, int[] hand) {
+	public Player(String name, int score, int[] hand) {
 		this();
 		// super();
-		this.playerName = playerName;
+		this.name = name;
 		this.score = score;
 		this.hand = hand;
 	}
@@ -56,7 +56,7 @@ public class Player {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + Arrays.hashCode(hand);
-		result = prime * result + ((playerName == null) ? 0 : playerName.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + score;
 		return result;
 	}
@@ -76,22 +76,22 @@ public class Player {
 		Player other = (Player) obj;
 		if (!Arrays.equals(hand, other.hand))
 			return false;
-		if (playerName == null) {
-			if (other.playerName != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!playerName.equals(other.playerName))
+		} else if (!name.equals(other.name))
 			return false;
 		if (score != other.score)
 			return false;
 		return true;
 	}
 
-	public void setPlayerName(String playerName) {
-		this.playerName = playerName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getPlayerName() {
-		return this.playerName;
+	public String getName() {
+		return this.name;
 	}
 
 	private void setScore(int score) {
@@ -104,7 +104,7 @@ public class Player {
 		return this.score;
 	}
 
-	private int[] getHand() {
+	protected int[] getHand() {
 		return hand;
 	}
 
@@ -114,7 +114,7 @@ public class Player {
 
 	@Override
 	public String toString() {
-		return "Player [hand=" + Arrays.toString(hand) + ", score=" + score + ", playerName=" + playerName + "]";
+		return "Player [hand=" + Arrays.toString(hand) + ", score=" + score + ", name=" + name + "]";
 	}
 
 }

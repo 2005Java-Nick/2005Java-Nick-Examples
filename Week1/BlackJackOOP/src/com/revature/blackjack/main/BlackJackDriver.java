@@ -2,6 +2,7 @@ package com.revature.blackjack.main;
 
 import java.util.Scanner;
 
+import com.revature.blackjack.player.Dealer;
 import com.revature.blackjack.player.Player;
 
 /*
@@ -49,6 +50,7 @@ public class BlackJackDriver {
 		 */
 
 		BlackJackDriver bjd = new BlackJackDriver();
+		Dealer dealer = new Dealer();
 		Player player = new Player();
 		// Deal Players Hand
 		// generating a random number from 1 to 11
