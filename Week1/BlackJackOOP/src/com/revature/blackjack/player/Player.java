@@ -2,6 +2,8 @@ package com.revature.blackjack.player;
 
 import java.util.Arrays;
 
+import com.revature.blackjack.exception.ScoreLessThanZeroException;
+
 //What is an object? instance variables and methods
 //State and Behavior
 public class Player {
@@ -13,9 +15,17 @@ public class Player {
 	private String name;
 
 	// Player Logic
-	public void drawCard(int index, int card) {
+	public void drawCard(int index, int card) throws ScoreLessThanZeroException {
+
 		this.getHand()[index] = card;
-		calculateScore(card);
+
+		try {
+			calculateScore(card);
+		} catch (IllegalArgumentException e) {
+			this.getHand()[index] = 0;
+			throw new ScoreLessThanZeroException(e);
+		}
+
 	}
 
 	private void calculateScore(int card) {
@@ -24,7 +34,7 @@ public class Player {
 
 	public String showHand() {
 		String displayHand = "";
-		for (int card: this.getHand()) {
+		for (int card : this.getHand()) {
 			displayHand += card;
 			displayHand += ":";
 		}
@@ -97,6 +107,8 @@ public class Player {
 	private void setScore(int score) {
 		if (score >= 0) {
 			this.score = score;
+		} else {
+			throw new IllegalArgumentException("Negative score reached");
 		}
 	}
 
