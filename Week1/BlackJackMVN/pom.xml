@@ -3,9 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.revature</groupId>
-	<artifactId>BlackJackOOP</artifactId>
+	<artifactId>BlackJackMVN</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>BlackJackOOP</name>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
@@ -40,6 +39,5 @@
 			<version>1.10.19</version>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 </project>
