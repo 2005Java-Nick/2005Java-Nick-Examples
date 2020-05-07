@@ -2,11 +2,17 @@ package com.revature.blackjack.player;
 
 import java.util.Arrays;
 
+import org.apache.log4j.Logger;
+
 import com.revature.blackjack.exception.ScoreLessThanZeroException;
 
 //What is an object? instance variables and methods
 //State and Behavior
 public class Player {
+	
+	//Logs allow us to have a record of what is happening in our program
+	//Logging levels include: Fatal, Error, Warn, Debug, Info, & Trace
+	private static Logger log = Logger.getRootLogger();
 
 	private int[] hand;
 
@@ -22,6 +28,7 @@ public class Player {
 		try {
 			calculateScore(card);
 		} catch (IllegalArgumentException e) {
+			log.error("Negative Score Calculated", e);
 			this.getHand()[index] = 0;
 			throw new ScoreLessThanZeroException(e);
 		}
