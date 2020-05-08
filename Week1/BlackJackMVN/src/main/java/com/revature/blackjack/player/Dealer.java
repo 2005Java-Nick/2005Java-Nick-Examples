@@ -1,12 +1,14 @@
 package com.revature.blackjack.player;
 
+import java.util.List;
+
 public class Dealer extends Player{
 	
 	@Override
 	public String showHand() {
 		String displayHand = "?:";
-		for (int i = 1; i < this.getHand().length; i++) {
-			displayHand += this.getHand()[i];
+		for (int i = 1; i < this.getHand().size(); i++) {
+			displayHand += this.getHand().get(i);
 		}
 		return displayHand;
 	}
@@ -19,7 +21,7 @@ public class Dealer extends Player{
 		super();
 	}
 
-	public Dealer(String name, int score, int[] hand) {
+	public Dealer(String name, int score, List<Integer> hand) {
 		super(name, score, hand);
 	}
 	

@@ -1,6 +1,8 @@
 package com.revature.blackjack.player;
 
-import java.util.Arrays;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -8,28 +10,34 @@ import com.revature.blackjack.exception.ScoreLessThanZeroException;
 
 //What is an object? instance variables and methods
 //State and Behavior
-public class Player {
+public class Player implements Serializable {
 	
 	//Logs allow us to have a record of what is happening in our program
 	//Logging levels include: Fatal, Error, Warn, Debug, Info, & Trace
 	private static Logger log = Logger.getRootLogger();
 
-	private int[] hand;
+	private transient List<Integer> hand;
 
-	private int score;
+	private transient int score;
 
 	private String name;
+	
+	private int tokens;
 
 	// Player Logic
+	public void drawCard(int card) throws ScoreLessThanZeroException {
+		this.drawCard(this.getHand().size(), card);
+	}
+	
 	public void drawCard(int index, int card) throws ScoreLessThanZeroException {
 
-		this.getHand()[index] = card;
+		this.getHand().add(index, card);
 
 		try {
 			calculateScore(card);
 		} catch (IllegalArgumentException e) {
 			log.error("Negative Score Calculated", e);
-			this.getHand()[index] = 0;
+			this.getHand().set(index, 0);
 			throw new ScoreLessThanZeroException(e);
 		}
 
@@ -55,12 +63,12 @@ public class Player {
 		// first line?
 		// always super() or this()
 		// super(); implicitly
-		this.hand = new int[13];
+		this.hand = new ArrayList<Integer>();
 		this.score = 0;
 		this.name = "Player" + Math.random() * 100;
 	}
 
-	public Player(String name, int score, int[] hand) {
+	public Player(String name, int score, List<Integer> hand) {
 		this();
 		// super();
 		this.name = name;
@@ -72,7 +80,7 @@ public class Player {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + Arrays.hashCode(hand);
+		result = prime * result + hand.hashCode();
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + score;
 		return result;
@@ -91,7 +99,7 @@ public class Player {
 		if (getClass() != obj.getClass())
 			return false;
 		Player other = (Player) obj;
-		if (!Arrays.equals(hand, other.hand))
+		if (!hand.equals(other.hand))
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -123,17 +131,25 @@ public class Player {
 		return this.score;
 	}
 
-	protected int[] getHand() {
+	protected List<Integer> getHand() {
 		return hand;
 	}
 
-	private void setHand(int[] hand) {
+	private void setHand(List<Integer> hand) {
 		this.hand = hand;
+	}
+	
+	public int getTokens() {
+		return tokens;
+	}
+
+	public void setTokens(int tokens) {
+		this.tokens = tokens;
 	}
 
 	@Override
 	public String toString() {
-		return "Player [hand=" + Arrays.toString(hand) + ", score=" + score + ", name=" + name + "]";
+		return "Player [hand=" + hand.toString() + ", score=" + score + ", name=" + name + "]";
 	}
 
 }

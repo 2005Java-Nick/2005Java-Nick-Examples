@@ -1,6 +1,9 @@
 package com.revature.blackjack.gamelogic;
 
+import java.util.List;
+
 import com.revature.blackjack.player.Dealer;
+import com.revature.blackjack.player.Player;
 
 public interface BlackJackGame {
 	
@@ -9,9 +12,21 @@ public interface BlackJackGame {
 	public Dealer getDealer();
 	
 	public void setDealer(Dealer dealer);
-
-	public int[] getDeck();
 	
-	public void setDeck(int[] deck);
+	public Player getPlayer();
+	
+	public void setPlayer(Player p);
+
+	public List<Integer> getDeck();
+	
+	public void setDeck(List<Integer> deck);
+	
+	public void playerHit();
+	
+	public void setUp();
+	
+	public String getWinner();
+	
+	public void dealHands();
 	
 }

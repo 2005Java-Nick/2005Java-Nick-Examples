@@ -4,6 +4,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,7 +27,7 @@ public class BlackJackGameTest {
 	
 	private Dealer dealer;
 	
-	int[] deck;
+	List<Integer> deck;
 	
 	@Mock
 	DealerLogic dealerLogic;
@@ -42,7 +45,11 @@ public class BlackJackGameTest {
 		
 		blackJackGame = new BlackJackGameImpl();
 		
-		deck = new int[]{3, 8, 10, 5};
+		deck = new ArrayList<Integer>();
+		deck.add(3);
+		deck.add(8);
+		deck.add(10);
+		deck.add(5);
 		blackJackGame.setDeck(deck);
 	}
 
@@ -52,7 +59,10 @@ public class BlackJackGameTest {
 
 	@Test
 	public void playDealerHandTest() {
-		dealer = new Dealer("Bill", 20, new int[] {10,10});
+		List<Integer> hand = new ArrayList<Integer>();
+		hand.add(10);
+		hand.add(10);
+		dealer = new Dealer("Bill", 20, hand);
 		blackJackGame.setDealer(dealer);
 		when(dealerLogic.stand(dealer)).thenReturn(true);
 		blackJackGame.setDealerLogic(dealerLogic);
@@ -64,7 +74,10 @@ public class BlackJackGameTest {
 	
 	@Test
 	public void playDealerHandHitTest() {
-		dealer = new Dealer("Bill", 15, new int[] {10,5});
+		List<Integer> hand = new ArrayList<Integer>();
+		hand.add(10);
+		hand.add(5);
+		dealer = new Dealer("Bill", 20, hand);
 		blackJackGame.setDealer(dealer);
 		when(dealerLogic.stand(dealer)).thenReturn(false);
 		blackJackGame.setDealerLogic(dealerLogic);
