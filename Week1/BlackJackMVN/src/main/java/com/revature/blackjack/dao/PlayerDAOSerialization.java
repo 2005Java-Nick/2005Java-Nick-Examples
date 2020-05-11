@@ -46,7 +46,6 @@ public class PlayerDAOSerialization implements PlayerDAO{
 
 	@Override
 	public Player getPlayer(String playerName) {
-		
 		Player p = null;
 		// Try-With-Resources         vvvvvv----must implement AutoCloseable
 		try (FileInputStream fis = new FileInputStream(playerName); ObjectInputStream ois = new ObjectInputStream(fis)){

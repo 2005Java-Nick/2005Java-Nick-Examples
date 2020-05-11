@@ -25,7 +25,7 @@ public class BlackJackGameImpl implements BlackJackGame {
 	private DealerLogic dealerLogic = new DealerLogicImpl();
 	
 	public static BlackJackGame getBlackJackGame() {
-		if (bjgi != null) {
+		if (bjgi == null) {
 			bjgi = new BlackJackGameImpl();
 		}
 		
