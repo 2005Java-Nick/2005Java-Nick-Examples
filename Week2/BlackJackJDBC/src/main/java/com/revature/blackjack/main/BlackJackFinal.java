@@ -3,7 +3,7 @@ package com.revature.blackjack.main;
 import java.util.Scanner;
 
 import com.revature.blackjack.dao.PlayerDAO;
-import com.revature.blackjack.dao.PlayerDAOSerialization;
+import com.revature.blackjack.dao.PlayerDAOPostgres;
 import com.revature.blackjack.gamelogic.BlackJackGame;
 import com.revature.blackjack.gamelogic.BlackJackGameImpl;
 import com.revature.blackjack.player.Player;
@@ -13,7 +13,7 @@ public class BlackJackFinal {
 	
 	private static final BlackJackGame blackJackGame = BlackJackGameImpl.getBlackJackGame();
 	
-	private static PlayerDAO playerDao = new PlayerDAOSerialization();
+	private static PlayerDAO playerDao = new PlayerDAOPostgres();
 
 	private static Scanner scan = new Scanner(System.in);
 	
@@ -27,10 +27,13 @@ public class BlackJackFinal {
 		
 		Player p = playerDao.getPlayer(playername);
 		
-		if (p != null) {
+		if (p == null) {
+			System.out.println("Creating new player");
 			p = new Player();
 			p.setName(playername);
 		}
+		
+		System.out.println(p);
 		
 		blackJackGame.setPlayer(p);
 

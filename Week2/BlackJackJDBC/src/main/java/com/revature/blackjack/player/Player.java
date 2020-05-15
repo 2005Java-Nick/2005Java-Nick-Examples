@@ -150,7 +150,9 @@ public class Player implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Player [hand=" + hand.toString() + ", score=" + score + ", name=" + name + "]";
+		return "Player [hand=" + hand + ", score=" + score + ", name=" + name + ", tokens=" + tokens + "]";
 	}
+
+	
 
 }
