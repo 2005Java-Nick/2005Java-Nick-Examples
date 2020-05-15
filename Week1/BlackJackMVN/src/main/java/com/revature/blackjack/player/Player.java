@@ -7,16 +7,22 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.revature.blackjack.exception.ScoreLessThanZeroException;
+import com.revature.util.Card;
 
 //What is an object? instance variables and methods
 //State and Behavior
 public class Player implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6672840687700942664L;
+
 	//Logs allow us to have a record of what is happening in our program
 	//Logging levels include: Fatal, Error, Warn, Debug, Info, & Trace
 	private static Logger log = Logger.getRootLogger();
 
-	private transient List<Integer> hand;
+	private transient List<Card> hand;
 
 	private transient int score;
 
@@ -25,11 +31,11 @@ public class Player implements Serializable {
 	private int tokens;
 
 	// Player Logic
-	public void drawCard(int card) throws ScoreLessThanZeroException {
+	public void drawCard(Card card) throws ScoreLessThanZeroException {
 		this.drawCard(this.getHand().size(), card);
 	}
 	
-	public void drawCard(int index, int card) throws ScoreLessThanZeroException {
+	public void drawCard(int index, Card card) throws ScoreLessThanZeroException {
 
 		this.getHand().add(index, card);
 
@@ -37,25 +43,35 @@ public class Player implements Serializable {
 			calculateScore(card);
 		} catch (IllegalArgumentException e) {
 			log.error("Negative Score Calculated", e);
-			this.getHand().set(index, 0);
+			this.getHand().remove(index);
 			throw new ScoreLessThanZeroException(e);
 		}
 
 	}
 
-	private void calculateScore(int card) {
-		this.setScore(this.getScore() + card);
+	private void calculateScore(Card card) {
+		this.setScore(this.getScore() + card.getValue());
 	}
 
 	public String showHand() {
 		String displayHand = "";
-		for (int card : this.getHand()) {
-			displayHand += card;
-			displayHand += ":";
+		for (Card card : this.getHand()) {
+			displayHand += card.getCardName();
+			displayHand += ", ";
 		}
+		displayHand = displayHand.replaceAll(", $", "");
 		return displayHand;
 	}
 
+	public boolean reduceAce() {
+		for(Card c : hand) {
+			if(c.getValue() == 11) {
+				c.setValue(1);
+				return true;
+			}
+		}
+		return false;
+	}
 	// possibly will need to add an index to add cards to the hand
 	// future improvements: bet/wallet/win%/skipping or joining game
 
@@ -63,12 +79,12 @@ public class Player implements Serializable {
 		// first line?
 		// always super() or this()
 		// super(); implicitly
-		this.hand = new ArrayList<Integer>();
+		this.hand = new ArrayList<Card>();
 		this.score = 0;
 		this.name = "Player" + Math.random() * 100;
 	}
 
-	public Player(String name, int score, List<Integer> hand) {
+	public Player(String name, int score, List<Card> hand) {
 		this();
 		// super();
 		this.name = name;
@@ -119,7 +135,7 @@ public class Player implements Serializable {
 		return this.name;
 	}
 
-	private void setScore(int score) {
+	public void setScore(int score) {
 		if (score >= 0) {
 			this.score = score;
 		} else {
@@ -131,11 +147,11 @@ public class Player implements Serializable {
 		return this.score;
 	}
 
-	protected List<Integer> getHand() {
+	protected List<Card> getHand() {
 		return hand;
 	}
 
-	private void setHand(List<Integer> hand) {
+	private void setHand(List<Card> hand) {
 		this.hand = hand;
 	}
 	

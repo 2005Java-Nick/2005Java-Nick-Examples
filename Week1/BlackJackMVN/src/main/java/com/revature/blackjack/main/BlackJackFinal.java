@@ -34,17 +34,31 @@ public class BlackJackFinal {
 		
 		blackJackGame.setPlayer(p);
 		
-		//Draw inital hands
+		//Draw initial hands
 		blackJackGame.dealHands();
 		
 		//display hands
+		System.out.println("Shuffling cards...");
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		System.out.println("Dealing cards...");
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		System.out.println("Player hand: " + blackJackGame.getPlayer().showHand());
 		System.out.println("Dealer hand: " + blackJackGame.getDealer().showHand());
 		
 		//Run dealer on own Thread
 		Runnable r = new DealerThread(blackJackGame);
 		Thread t = new Thread(r);
-		t.start();
+		
 		
 		//Player play hand
 		String answer = "";
@@ -54,7 +68,35 @@ public class BlackJackFinal {
 			if ("hit".equalsIgnoreCase(answer)) {
 				blackJackGame.playerHit();
 			}
-		} while (!"stand".equalsIgnoreCase(answer));
+			System.out.println("Player hand: " + blackJackGame.getPlayer().showHand());
+			System.out.println("Dealer hand: " + blackJackGame.getDealer().showHand());
+			if(blackJackGame.getPlayer().getScore() > 21) {
+				try {
+					Thread.sleep(3000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if(blackJackGame.getPlayer().reduceAce()) {
+					blackJackGame.getPlayer().setScore(blackJackGame.getPlayer().getScore()-10);
+					System.out.println("The value of your ace was reduced from 11 to 1.");
+				} else {
+					System.out.println("Bust!");
+				}
+			}
+			if(blackJackGame.getPlayer().getScore() == 21) {
+				System.out.println("Your hand is now worth 21 points!");
+			}
+		} while (!"stand".equalsIgnoreCase(answer) && blackJackGame.getPlayer().getScore() < 21);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		if(blackJackGame.getPlayer().getScore() < 22) {
+			t.start();
+		}
 		
 		try {
 			t.join();
@@ -63,10 +105,13 @@ public class BlackJackFinal {
 			e.printStackTrace();
 		}
 		
-		System.out.println("Winner: " + blackJackGame.getWinner());
-		
-		System.out.println("Congratulations " + blackJackGame.getPlayer().getName() + 
-				" You now have " + blackJackGame.getPlayer().getTokens() + " Tokens");
+		System.out.println("\nWinner: " + blackJackGame.getWinner() + "\n");
+		System.out.println("Player hand: " + blackJackGame.getPlayer().showHand());
+		System.out.println("Player score: " + blackJackGame.getPlayer().getScore());
+		System.out.println("Dealer hand: " + blackJackGame.getDealer().showHiddenCards());
+		System.out.println("Dealer score: " + blackJackGame.getDealer().getScore());
+		System.out.println(blackJackGame.getPlayer().getName() + 
+				", you now have " + blackJackGame.getPlayer().getTokens() + " Tokens.");
 		
 		playerDao.savePlayer(blackJackGame.getPlayer());
 		

@@ -2,14 +2,22 @@ package com.revature.blackjack.player;
 
 import java.util.List;
 
+import com.revature.util.Card;
+
 public class Dealer extends Player{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3056488063136524247L;
+
 	@Override
 	public String showHand() {
-		String displayHand = "?:";
+		String displayHand = "?, ";
 		for (int i = 1; i < this.getHand().size(); i++) {
-			displayHand += this.getHand().get(i);
+			displayHand += this.getHand().get(i).getCardName() + ", ";
 		}
+		displayHand = displayHand.replaceFirst(", $", "");
 		return displayHand;
 	}
 	
@@ -21,7 +29,7 @@ public class Dealer extends Player{
 		super();
 	}
 
-	public Dealer(String name, int score, List<Integer> hand) {
+	public Dealer(String name, int score, List<Card> hand) {
 		super(name, score, hand);
 	}
 	
