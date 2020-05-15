@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.revature.blackjack.exception.ScoreLessThanZeroException;
+import com.revature.util.Card;
 
 //What is an object? instance variables and methods
 //State and Behavior
@@ -25,8 +26,8 @@ public class Player implements Serializable {
 	private int tokens;
 
 	// Player Logic
-	public void drawCard(int card) throws ScoreLessThanZeroException {
-		this.drawCard(this.getHand().size(), card);
+	public void drawCard(Card card) throws ScoreLessThanZeroException {
+		this.drawCard(this.getHand().size(), card.getValue());
 	}
 	
 	public void drawCard(int index, int card) throws ScoreLessThanZeroException {
@@ -132,9 +133,6 @@ public class Player implements Serializable {
 	}
 
 	protected List<Integer> getHand() {
-		if (hand == null) {
-			hand = new ArrayList<Integer>();
-		}
 		return hand;
 	}
 
@@ -152,7 +150,9 @@ public class Player implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Player [hand=" + hand.toString() + ", score=" + score + ", name=" + name + "]";
+		return "Player [hand=" + hand + ", score=" + score + ", name=" + name + ", tokens=" + tokens + "]";
 	}
+
+	
 
 }

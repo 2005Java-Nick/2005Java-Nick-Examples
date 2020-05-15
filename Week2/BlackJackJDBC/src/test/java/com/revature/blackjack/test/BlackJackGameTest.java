@@ -19,6 +19,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.revature.blackjack.gamelogic.BlackJackGameImpl;
 import com.revature.blackjack.gamelogic.DealerLogic;
 import com.revature.blackjack.player.Dealer;
+import com.revature.util.Card;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BlackJackGameTest {
@@ -27,7 +28,7 @@ public class BlackJackGameTest {
 	
 	private Dealer dealer;
 	
-	List<Integer> deck;
+	List<Card> deck;
 	
 	@Mock
 	DealerLogic dealerLogic;
@@ -45,11 +46,11 @@ public class BlackJackGameTest {
 		
 		blackJackGame = (BlackJackGameImpl) BlackJackGameImpl.getBlackJackGame();
 		
-		deck = new ArrayList<Integer>();
-		deck.add(3);
-		deck.add(8);
-		deck.add(10);
-		deck.add(5);
+		deck = new ArrayList<Card>();
+		deck.add(new Card(3));
+		deck.add(new Card(8));
+		deck.add(new Card(10));
+		deck.add(new Card(5));
 		blackJackGame.setDeck(deck);
 	}
 
