@@ -35,5 +35,27 @@ public class StoredProcTest {
 		}
 		
 	}
+	
+	@Test
+	public void testFunction() {
+		
+		try (Connection conn = ConnectionFactory.getConnection()) {
+			int score = 0;
+			String name = "";
+			String sql = "select get_dealer_score(?)";
+			//CallableStatement call = conn.prepareCall(sql);
+			PreparedStatement call = conn.prepareCall(sql);
+			call.setString(1, "Game 1");
+			
+			ResultSet ret = call.executeQuery();
+			ret.next();
+			System.out.println(ret.getInt(1));
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 }
