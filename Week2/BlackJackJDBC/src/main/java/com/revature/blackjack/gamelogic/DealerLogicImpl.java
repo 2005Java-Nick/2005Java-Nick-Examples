@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import com.revature.blackjack.player.Dealer;
+import com.revature.util.Card;
 
 public class DealerLogicImpl /* <T extends Player> */ implements DealerLogic {
 
@@ -20,7 +21,7 @@ public class DealerLogicImpl /* <T extends Player> */ implements DealerLogic {
 	}
 
 	@Override
-	public boolean hit(Dealer dealer, List<Integer> deck) {
+	public boolean hit(Dealer dealer, List<Card> deck) {
 		// TODO Auto-generated method stub
 		return false;
 	}
