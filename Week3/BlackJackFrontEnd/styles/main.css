@@ -11,8 +11,18 @@
     margin: 5px;
 }
 
+.playArea {
+    background-color: green;
+}
+
 .hand {
     display: flex;
+    border-radius: 5px;
+    border-color: white;
+    padding: 2px;
+    margin: 2px;
+    border-width: 1px;
+    border-style: inset;
 }
 
 #dealerCard3.emptyCard {
@@ -24,13 +34,14 @@
 }
 
 .card > img {
-    height: 20px;
-    width: 20px;
+    height: 30px;
+    width: 30px;
+    align-self: flex-end;
 }
 
 .card {
     margin: 2px;
-    padding: 1px;
+    padding: 3px;
     border-width: 2px;
     border-style: solid;
     border-radius: 5px;
@@ -38,4 +49,7 @@
     font-size: small;
     width: 35px;
     border-color: blue;
+    background-color: white;
+    flex-direction: column;
+    display: flex;
 }
