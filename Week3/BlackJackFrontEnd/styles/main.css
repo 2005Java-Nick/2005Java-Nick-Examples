@@ -1,0 +1,55 @@
+.header {
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+}
+
+.playArea {
+    border-width: 5px;
+    border-style: solid;
+    border-color: black;
+    padding: 5px;
+    margin: 5px;
+}
+
+.playArea {
+    background-color: green;
+}
+
+.hand {
+    display: flex;
+    border-radius: 5px;
+    border-color: white;
+    padding: 2px;
+    margin: 2px;
+    border-width: 1px;
+    border-style: inset;
+}
+
+#dealerCard3.emptyCard {
+    border-color: lightgrey;
+}
+
+#playerCard3.emptyCard {
+    border-color: lightgrey;
+}
+
+.card > img {
+    height: 30px;
+    width: 30px;
+    align-self: flex-end;
+}
+
+.card {
+    margin: 2px;
+    padding: 3px;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 5px;
+    height: 50px;
+    font-size: small;
+    width: 35px;
+    border-color: blue;
+    background-color: white;
+    flex-direction: column;
+    display: flex;
+}
