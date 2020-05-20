@@ -60,11 +60,11 @@ class CardService {
     generateCardSuite(card) {
         card.suite = suitUrls[(Math.floor(Math.random() * 4))];
     }
-    createCardElement(card) {
+    createCardElement(card,playerType) {
         //create div element for card
         let cardElement = document.createElement("div");
         //add classses
-        cardElement.setAttribute("class", "card playerCard");
+        cardElement.setAttribute("class", "card "+playerType);
         //set value of card
         if (card.value === 11) {
             cardElement.innerHTML = "A";
@@ -90,7 +90,7 @@ class Player {
 
 //player.hand or player["hand"]
 
-function setPlayerCards(player) {
+function setPlayerCards(player,handType) {
 
     let cardService = new CardService();
 
@@ -111,12 +111,17 @@ function setPlayerCards(player) {
     //card2obj = makeCard(card2SuiteUrl, card2Value);
 
 
-    let card1 = cardService.createCardElement(card1obj);
-    let card2 = cardService.createCardElement(card2obj);
-    let hand = document.getElementById("playerHand");
+    let card1 = cardService.createCardElement(card1obj,handType);
+    if (handType==="dealerHand")
+    {
+        card1.innerHTML = "?";
+    }
+    let card2 = cardService.createCardElement(card2obj,handType);
+    let hand = document.getElementById(handType);
     console.log(hand.lastChild);
     hand.insertBefore(card1, hand.lastChild.previousSibling);
     hand.insertBefore(card2, hand.lastChild.previousSibling);
+
 
     player.score = card1obj.value + card2obj.value;
 
@@ -124,48 +129,136 @@ function setPlayerCards(player) {
 
     player.hand = [card1obj, card2obj];
 
-    displayPlayerScore(player.score);
-
     return player;
+
+
+
 
 }
 
-function playerHit(event, player) {
+function playerHit(event, player,dealer) {
     event.preventDefault();
-    let card = new Card();
-    let cardService = new CardService();
+    if(player.score<21)
+    {
+        let card = new Card();
+        let cardService = new CardService();
 
-    cardService.generateCardSuite(card);
-    cardService.generateCardValue(card);
+        cardService.generateCardSuite(card);
+        cardService.generateCardValue(card);
 
-    let cardElement = cardService.createCardElement(card);
-    let hand = document.getElementById("playerHand");
-    hand.insertBefore(cardElement, hand.lastChild.previousSibling);
+        let cardElement = cardService.createCardElement(card,"playerHand");
+        let hand = document.getElementById("playerHand");
+        hand.insertBefore(cardElement, hand.lastChild.previousSibling);
 
-    console.log(player);
-    player.hand.push(card);
-    player.score += card.value;
-    displayPlayerScore(player.score);
-
+        console.log(player);
+        player.hand.push(card);
+        player.score += card.value;
+        displayPlayerScore(player.score);
+    }
     if (player.score >= 21) {
         let playerBtns = document.getElementsByClassName("playerInput");
         for (btn of playerBtns) {
             console.log(btn);
             btn.setAttribute("disabled", true);
         }
-        displayPlayerScore("BUST");
+        if(player.score>21)
+        {
+            displayPlayerScore("BUST");
+        }
+        let cards =document.getElementsByClassName("dealerHand");
+        cards[0].innerHTML=dealer.hand[0].value;
+
+        let cardSuite = document.createElement("img");
+        cardSuite.setAttribute("src", dealer.hand[0].suite);
+        cards[0].appendChild(cardSuite);
+
+        var result = document.getElementById("gameResult");
+        result.innerHTML="Dealer Won";
     }
 }
+
+function playerStand(event, player,dealer) {
+    let playerBtns = document.getElementsByClassName("playerInput");
+    for (btn of playerBtns) {
+        console.log(btn);
+        btn.setAttribute("disabled", true);
+    }
+
+    let cards =document.getElementsByClassName("dealerHand");
+        cards[0].innerHTML=dealer.hand[0].value;
+
+        let cardSuite = document.createElement("img");
+        cardSuite.setAttribute("src", dealer.hand[0].suite);
+        cards[0].appendChild(cardSuite);
+
+        while(dealer.score<17)
+        {
+            dealerHit(dealer);
+        }
+        var result = document.getElementById("gameResult");
+
+        if(dealer.score>21)
+        {
+            result.innerHTML="Player Won";
+        }else if (player.score>dealer.score && player.score<=21)
+        {
+            result.innerHTML="Player Won";
+        }else
+        {
+            result.innerHTML="Dealer Won";
+        }
+}
+//-----------------------------------------dealer logic-----------------------------------------
+function dealerHit(dealer) {
+    let card = new Card();
+    let cardService = new CardService();
+
+    cardService.generateCardSuite(card);
+    cardService.generateCardValue(card);
+
+    let cardElement = cardService.createCardElement(card,dealerHand);
+    let hand = document.getElementById("dealerHand");
+    hand.insertBefore(cardElement, hand.lastChild.previousSibling);
+
+    console.log(dealer);
+    dealer.hand.push(card);
+    dealer.score += card.value;
+    displayDealerScore(dealer.score);
+
+    if (dealer.score >= 21) {
+        displayDealerScore("BUST");
+    }
+    
+
+}
+
 
 function displayPlayerScore(score) {
     document.getElementById("playerScore").innerHTML = score;
 }
 
+function displayDealerScore(score) {
+    document.getElementById("dealerScore").innerHTML = score;
+}
+
 window.onload = function () {
     let player = new Player();
-    this.setPlayerCards(player);
+    this.setPlayerCards(player,"playerHand");
+
+    displayPlayerScore(player.score);
+
+    let dealer = new Player();
+    this.setPlayerCards(dealer,"dealerHand");
+
+    displayDealerScore(dealer.score);
+
     let hitBtn = this.document.getElementById("playerHitBtn");
     //                      v-event  v------callback function
-    hitBtn.addEventListener("click", (e) => playerHit(e, player));
+    hitBtn.addEventListener("click", (e) => playerHit(e, player,dealer));
+
+    let standBtn = this.document.getElementById("playerStandBtn");
+    //                      v-event  v------callback function
+    standBtn.addEventListener("click", (e) => playerStand(e, player,dealer));
+    
 }
 

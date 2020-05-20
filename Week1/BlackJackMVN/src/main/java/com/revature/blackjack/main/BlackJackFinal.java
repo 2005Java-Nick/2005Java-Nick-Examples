@@ -27,20 +27,16 @@ public class BlackJackFinal {
 		
 		Player p = playerDao.getPlayer(playername);
 		
-		if (p == null) {
+		if (p != null) {
 			p = new Player();
 			p.setName(playername);
 		}
 		
 		blackJackGame.setPlayer(p);
-		
+
 		//Draw inital hands
 		blackJackGame.dealHands();
-		
-		//display hands
-		System.out.println("Player hand: " + blackJackGame.getPlayer().showHand());
-		System.out.println("Dealer hand: " + blackJackGame.getDealer().showHand());
-		
+		printHands();
 		//Run dealer on own Thread
 		Runnable r = new DealerThread(blackJackGame);
 		Thread t = new Thread(r);
@@ -53,6 +49,12 @@ public class BlackJackFinal {
 			answer = scan.nextLine();
 			if ("hit".equalsIgnoreCase(answer)) {
 				blackJackGame.playerHit();
+				blackJackGame.getPlayer();
+				printHands();
+				if(blackJackGame.getPlayer().getScore()>21)
+				{
+					break;
+				}
 			}
 		} while (!"stand".equalsIgnoreCase(answer));
 		
@@ -63,6 +65,7 @@ public class BlackJackFinal {
 			e.printStackTrace();
 		}
 		
+		printScores();
 		System.out.println("Winner: " + blackJackGame.getWinner());
 		
 		System.out.println("Congratulations " + blackJackGame.getPlayer().getName() + 
@@ -70,6 +73,21 @@ public class BlackJackFinal {
 		
 		playerDao.savePlayer(blackJackGame.getPlayer());
 		
+	}
+	
+	public static void printHands()
+	{
+		System.out.println("Player hand: " + blackJackGame.getPlayer().showHand());
+		System.out.println("Player Score: " + blackJackGame.getPlayer().getScore());
+		System.out.println("Dealer hand: " + blackJackGame.getDealer().showHand());
+	}
+	
+	public static void printScores()
+	{
+		System.out.println("Player Final hand: " + blackJackGame.getPlayer().showHand());
+		System.out.println("Player Final Score: " + blackJackGame.getPlayer().getScore());
+		System.out.println("Dealer Final hand: " + blackJackGame.getDealer().showHand());
+		System.out.println("Dealer Final Score: " + blackJackGame.getDealer().getScore());
 	}
 
 }

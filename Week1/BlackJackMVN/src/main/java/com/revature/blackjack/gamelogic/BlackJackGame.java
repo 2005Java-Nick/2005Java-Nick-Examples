@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.revature.blackjack.player.Dealer;
 import com.revature.blackjack.player.Player;
+import com.revature.util.Card;
 
 public interface BlackJackGame {
 	
@@ -17,9 +18,9 @@ public interface BlackJackGame {
 	
 	public void setPlayer(Player p);
 
-	public List<Integer> getDeck();
+	public List<Card> getDeck();
 	
-	public void setDeck(List<Integer> deck);
+	public void setDeck(List<Card> deck);
 	
 	public void playerHit();
 	

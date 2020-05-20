@@ -6,6 +6,7 @@ import java.util.List;
 import com.revature.blackjack.exception.ScoreLessThanZeroException;
 import com.revature.blackjack.player.Dealer;
 import com.revature.blackjack.player.Player;
+import com.revature.util.Card;
 import com.revature.util.DeckFactory;
 
 public class BlackJackGameImpl implements BlackJackGame {
@@ -20,12 +21,12 @@ public class BlackJackGameImpl implements BlackJackGame {
 
 	private Dealer dealer;
 
-	private List<Integer> deck;
+	private List<Card> deck;
 
 	private DealerLogic dealerLogic = new DealerLogicImpl();
 	
 	public static BlackJackGame getBlackJackGame() {
-		if (bjgi != null) {
+		if (bjgi == null) {
 			bjgi = new BlackJackGameImpl();
 		}
 		
@@ -51,7 +52,7 @@ public class BlackJackGameImpl implements BlackJackGame {
 
 	@Override
 	public void setPlayer(Player p) {
-		this.player = player;
+		this.player = p;
 	}
 
 	@Override
@@ -65,12 +66,12 @@ public class BlackJackGameImpl implements BlackJackGame {
 	}
 
 	@Override
-	public List<Integer> getDeck() {
+	public List<Card> getDeck() {
 		return this.deck;
 	}
 
 	@Override
-	public void setDeck(List<Integer> deck) {
+	public void setDeck(List<Card> deck) {
 		this.deck = deck;
 	}
 
@@ -99,7 +100,7 @@ public class BlackJackGameImpl implements BlackJackGame {
 
 	public String getWinner() {
 
-		if (player.getScore() > dealer.getScore()) {
+		if (player.getScore() > dealer.getScore() && player.getScore()<22) {
 			player.setTokens(player.getTokens() + 10);
 			return "Player: " + player.getName();
 		} else {
