@@ -33,6 +33,12 @@
     border-color: lightgrey;
 }
 
+#hiddenCard > img {
+    height: 50px !important;
+    width: 35px !important;
+    align-self: flex-end;
+}
+
 .card > img {
     height: 30px;
     width: 30px;
