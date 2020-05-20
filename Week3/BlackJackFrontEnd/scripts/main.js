@@ -87,7 +87,6 @@ class Player {
     }
 
 }
-
 //player.hand or player["hand"]
 
 function setPlayerCards(player) {
@@ -164,8 +163,70 @@ function displayPlayerScore(score) {
 window.onload = function () {
     let player = new Player();
     this.setPlayerCards(player);
+    this.setDealerCard(dealer);
     let hitBtn = this.document.getElementById("playerHitBtn");
-    //                      v-event  v------callback function
+    let StndBtn = this.document.getElementById("playerStandBtn");
+        //                      v-event  v------callback function
     hitBtn.addEventListener("click", (e) => playerHit(e, player));
-}
+    StndBtn.addEventListener("click", this.disablePlayerOptions);
+    StndBtn.addEventListener("click", this.dealerPlay);
 
+}
+function disablePlayerOptions(){
+    let playerBtns = document.getElementsByClassName("playerInput");
+        for (btn of playerBtns) {
+            console.log(btn);
+            btn.setAttribute("disabled", true);
+        }
+        dealerPlay();
+} 
+ 
+function setDealerCard(dealer){
+    let cardService = new CardService();
+
+    let card1obj = new Card();
+    let card2obj = new Card();
+
+    cardService.generateCardValue(card1obj);
+    cardService.generateCardValue(card2obj);
+
+    while (card1obj.value === card2obj.value) {
+        cardService.generateCardValue(card2obj);
+    }
+
+    cardService.generateCardSuite(card1obj);
+    cardService.generateCardSuite(card2obj);
+
+    //card1obj = makeCard(card1SuiteUrl, card1Value);
+    //card2obj = makeCard(card2SuiteUrl, card2Value);
+
+
+    let card1 = cardService.createCardElement(card1obj);
+    let card2 = cardService.createCardElement(card2obj);
+    let hand = document.getElementById("dealerHand");
+    console.log(hand.lastChild);
+    hand.insertBefore(card1, hand.lastChild.previousSibling);
+    hand.insertBefore(card2, hand.lastChild.previousSibling);
+
+    dealer.score = card1obj.value + card2obj.value;
+
+    console.log(dealer.score);
+
+    dealer.hand = [card1obj, card2obj];
+
+       return dealer;
+
+} 
+function dealerPlay(){
+do{
+    let card3obj = new Card();
+    cardService.generateCardValue(card3obj);
+    cardService.generateCardSuite(card3obj);
+    let card3 = cardService.createCardElement(card3obj);
+    let hand = document.getElementById("dealerHand");
+    console.log(hand.lastChild);
+    hand.insertBefore(card3, hand.lastChild.previousSibling);
+     dealer.score+=card3obj;
+     dealer.hand.push(card3obj);
+}while(dealer.score<17)
+}
