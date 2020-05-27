@@ -1,4 +1,9 @@
 <div class="card">
-    {{value}}
+    <div *ngIf="value < 11; else AceShow">{{value}}</div>
+    
+    <ng-template #AceShow>
+       A
+      </ng-template>
+
     <img [src]="suit"/>
 </div>

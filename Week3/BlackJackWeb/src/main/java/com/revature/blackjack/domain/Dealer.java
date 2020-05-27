@@ -2,8 +2,8 @@ package com.revature.blackjack.domain;
 
 import java.util.List;
 
-public class Dealer extends Player{
-	
+public class Dealer extends Player {
+
 	@Override
 	public String showHand() {
 		String displayHand = "?:";
@@ -12,7 +12,7 @@ public class Dealer extends Player{
 		}
 		return displayHand;
 	}
-	
+
 	public String showHiddenCards() {
 		return super.showHand();
 	}
@@ -21,10 +21,8 @@ public class Dealer extends Player{
 		super();
 	}
 
-	public Dealer(String name, int score, List<Integer> hand) {
+	public Dealer(String name, int score, List<Card> hand) {
 		super(name, score, hand);
 	}
-	
-	
 
 }
