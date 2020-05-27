@@ -1,0 +1,9 @@
+.hand {
+    display: flex;
+    border-radius: 5px;
+    border-color: white;
+    padding: 2px;
+    margin: 2px;
+    border-width: 1px;
+    border-style: inset;
+}

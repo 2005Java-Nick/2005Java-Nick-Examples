@@ -1,0 +1,6 @@
+<div class="hand">
+    <div *ngFor="let card of cards; index as i">
+        <app-card [value]="card.getValue()" [suit]="card.getSuit()"></app-card>
+    </div>
+    <div class="scoreDisplay">Score: {{score}}</div>
+</div>
