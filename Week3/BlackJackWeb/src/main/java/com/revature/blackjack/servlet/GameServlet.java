@@ -26,8 +26,9 @@ public class GameServlet extends HttpServlet{
 	private static PlayerService playerService = new PlayerServiceImpl();
 	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		String username = req.getParameter("user");
+		log.info(username);
 		Player player = playerService.getPlayerByUsername(username);
 		BlackJackGame blackJackGame = new BlackJackGame();
 		blackJackGame.setPlayer(player);
@@ -38,6 +39,7 @@ public class GameServlet extends HttpServlet{
 		String jsonReturn = mapper.writeValueAsString(new BlackJackGameDTO(blackJackGame));
 		log.info("Json value: " + jsonReturn);
 		writer.write(jsonReturn);
+		resp.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
 	}
 	
 }

@@ -21,7 +21,7 @@ public class Dealer extends Player{
 		super();
 	}
 
-	public Dealer(String name, int score, List<Integer> hand) {
+	public Dealer(String name, int score, List<Card> hand) {
 		super(name, score, hand);
 	}
 	
