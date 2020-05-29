@@ -7,10 +7,10 @@
     <img class="mb-4" src="../../../assets/login-logo.jpg" alt="" width="100" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Welcome to Blackjack Game!</h1>
     <label for="inputUsername">Username</label>
-    <input type="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+    <input type="username" [(ngModel)]="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
     <label for="inputPassword">Password</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-    <button class="btn btn-lg btn-secondary btn-block" type="submit" id="login-button">Sign in</button>
+    <input type="password" [(ngModel)]="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <button class="btn btn-lg btn-secondary btn-block" (click)="authenticate()"  id="login-button">Sign in</button>
     <p class="mt-5 mb-3 text-muted">&copy; @Copyright 2020</p>
 </div>
 </div>
