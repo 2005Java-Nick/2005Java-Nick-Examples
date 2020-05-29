@@ -13,15 +13,17 @@ public class ConnectionFactory {
 	
 	private static String password;
 	
-	private static final String DB_NAME = "postgres";
-	
+	private static final String DB_NAME = "nick_2005_db";
+
+
 	private static ConnectionFactory cf;
-	
+
+
 	private ConnectionFactory() {
-		url = "localhost";
+		url = System.getenv("2005_POSTGRES_URL");
 		url = "jdbc:postgresql://" + url + ":5432/" + DB_NAME + "?";
-		username = "postgres";
-		password = "1992Andres_";
+		username = System.getenv("2005_POSTGRES_USERNAME");
+		password = System.getenv("2005_POSTGRES_PASSWORD");
 	}
 	
 	private Connection createConnection() {

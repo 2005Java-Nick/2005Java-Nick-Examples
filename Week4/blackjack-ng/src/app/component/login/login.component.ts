@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/service/authentication.service';
+import { PlayerService } from 'src/app/service/player.service';
 
 @Component({
   selector: 'app-login',
@@ -8,15 +9,17 @@ import { AuthenticationService } from 'src/app/service/authentication.service';
 })
 export class LoginComponent implements OnInit {
 
-  private username: string;
-  private password: string;
+  username: string;
+  password: string;
 
   authenticate()
   {
-    this.authenticationService.authenticate(this.username, this.password);
+    this.authenticationService.authenticate(this.username, this.password).subscribe(
+      (player) => {this.playerService.setCurrentPlayer(player); }
+    );
   }
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService, private playerService: PlayerService) { }
 
   ngOnInit(): void {
   }

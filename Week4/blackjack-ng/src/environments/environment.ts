@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  serviceUrl: 'http://localhost:8080/BlackJackWeb/api/',
-  createGameEndpoint: 'startgame'
+  serviceUrl: 'http://localhost:8080/BlackJackWeb/',
+  createGameEndpoint: 'api/startgame',
+  loginEndpoint: 'authentication'
 };
 
 /*

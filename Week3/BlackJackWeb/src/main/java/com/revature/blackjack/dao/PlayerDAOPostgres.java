@@ -12,9 +12,9 @@ public class PlayerDAOPostgres implements PlayerDAO {
 	
 	//private static final String SAVE_PLAYER_QUERY = "update  player set player_tokens = ";
 	//private static final String SAVE_PLAYER_QUERY_2 = " where player_name = ";
-	private static final String SAVE_PLAYER_QUERY = "update  blackjack.player set player_tokens = ? where player_name = ?";
+	private static final String SAVE_PLAYER_QUERY = "update  player set player_tokens = ? where player_name = ?";
 	
-	private static final String GET_PLAYER_QUERY = "select * from blackjack.player p where p.player_name = ?";
+	private static final String GET_PLAYER_QUERY = "select * from player p where p.player_name = ?";
 
 	public void savePlayer(Player p) {
 		Connection conn = ConnectionFactory.getConnection();

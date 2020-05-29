@@ -11,7 +11,7 @@ import com.revature.util.ConnectionFactory;
 
 public class CardDAOPostgres implements CardDAO {
 
-	private static final String GET_ALL_CARDS_QUERY = "Select * from blackjack.cards";
+	private static final String GET_ALL_CARDS_QUERY = "Select * from cards";
 
 	public List<Card> getAllCards() {
 

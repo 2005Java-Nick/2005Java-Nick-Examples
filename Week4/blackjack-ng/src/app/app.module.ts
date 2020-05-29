@@ -13,6 +13,7 @@ import { HomeComponent } from './component/home/home.component';
 import { LoginComponent } from './component/login/login.component';
 import { NavBarComponent } from './component/nav-bar/nav-bar.component';
 import { FormsModule} from '@angular/forms';
+import { AuthenticationInterceptor } from './AuthenticationInterceptor';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { FormsModule} from '@angular/forms';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [AuthenticationInterceptor],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

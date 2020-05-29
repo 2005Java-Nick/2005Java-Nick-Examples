@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -27,9 +28,15 @@ public class GameServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		String username = req.getParameter("user");
-		log.info(username);
-		Player player = playerService.getPlayerByUsername(username);
+		//String username = req.getParameter("user");
+		//log.info(username);
+		HttpSession sess = req.getSession(false);
+		System.out.println(sess);
+		if (sess == null) {
+			resp.setStatus(401);
+			return;
+		}
+		Player player = (Player) sess.getAttribute("user");//playerService.getPlayerByUsername(username);
 		BlackJackGame blackJackGame = new BlackJackGame();
 		blackJackGame.setPlayer(player);
 		blackJackGameService.setUp(blackJackGame);
