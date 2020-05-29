@@ -1,4 +1,4 @@
 <div class="card">
-    {{value | cardValue}}
-    <img [src]="suit"/>
+    <div *ngIf="value!=-1">{{value | cardValue}}</div>
+    <img [src]="suit" [ngStyle]="getSuitStyles()" />
 </div>

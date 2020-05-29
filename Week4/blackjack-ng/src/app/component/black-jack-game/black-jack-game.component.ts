@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BlackJackGame } from 'src/app/types/BlackJackGame';
 import { GameService } from 'src/app/service/game.service';
+import { PlayerService } from 'src/app/service/player.service';
 
 @Component({
   selector: 'app-black-jack-game',
@@ -11,15 +12,22 @@ export class BlackJackGameComponent implements OnInit {
 
   game: BlackJackGame;
 
-  constructor(private gameService: GameService) { }
+  gameReady = false;
+
+  constructor(private gameService: GameService, private playerService: PlayerService) { }
 
   setNewGame() {
     this.gameService.createNewGame().subscribe(
-      (game) => { console.log(game); }
+      (game) => {
+        this.game = game;
+        this.gameReady = true;
+        this.playerService.setCurrentPlayer(game.player);
+      }
     );
   }
 
   ngOnInit(): void {
+    this.setNewGame();
   }
 
 }

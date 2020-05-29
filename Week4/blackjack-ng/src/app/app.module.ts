@@ -7,6 +7,11 @@ import { CardComponent } from './component/card/card.component';
 import { HandComponent } from './component/hand/hand.component';
 import { CardValuePipe } from './pipe/card-value.pipe';
 import { BlackJackGameComponent } from './component/black-jack-game/black-jack-game.component';
+import { PlayerComponent } from './component/player/player.component';
+import { AppRoutingModule } from './app-routing/app-routing.module';
+import { HomeComponent } from './component/home/home.component';
+import { LoginComponent } from './component/login/login.component';
+import { NavBarComponent } from './component/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -14,11 +19,16 @@ import { BlackJackGameComponent } from './component/black-jack-game/black-jack-g
     CardComponent,
     HandComponent,
     CardValuePipe,
-    BlackJackGameComponent
+    BlackJackGameComponent,
+    PlayerComponent,
+    HomeComponent,
+    LoginComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

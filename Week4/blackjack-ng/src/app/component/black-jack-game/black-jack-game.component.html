@@ -1,5 +1,10 @@
 <h1>Welcome to our BlackJack Game</h1>
-<app-hand #dealer></app-hand>
-<app-hand #player></app-hand>
-<button (click) = "player.addCard()">Hit</button>
-<button (click) = "setNewGame()">Reset Game</button>
+<div *ngIf="gameReady; else loadingScreen">
+    <app-hand #dealer [isDealer] = true [cards] = "[game.dealer.shownCard]"></app-hand>
+    <app-hand #player [isDealer] = false [cards]="game.player.hand" [score]="game.player.score"></app-hand>
+    <button (click)="player.addCard()">Hit</button>
+</div>
+<ng-template #loadingScreen>
+    <h2>LOADING...</h2>
+</ng-template>
+<button (click)="setNewGame();">Reset Game</button>

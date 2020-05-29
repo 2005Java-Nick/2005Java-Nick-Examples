@@ -16,7 +16,7 @@ export class GameService {
 
   public createNewGame(): Observable<BlackJackGame> {
     return this.http.post<BlackJackGame>(this.createGameUrl,
-      { user: this.username },
+      'user=' + this.username,
       {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
