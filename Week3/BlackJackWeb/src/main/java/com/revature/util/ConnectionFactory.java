@@ -10,17 +10,18 @@ public class ConnectionFactory {
 	
 	private static String username;
 	
+	
 	private static String password;
 	
-	private static final String DB_NAME = "nick_2005_db";
+	private static final String DB_NAME = "postgres";
 	
 	private static ConnectionFactory cf;
 	
 	private ConnectionFactory() {
-		url = System.getenv("2005_POSTGRES_URL");
+		url = "localhost";
 		url = "jdbc:postgresql://" + url + ":5432/" + DB_NAME + "?";
-		username = System.getenv("2005_POSTGRES_USERNAME");
-		password = System.getenv("2005_POSTGRES_PASSWORD");
+		username = "postgres";
+		password = "1992Andres_";
 	}
 	
 	private Connection createConnection() {
@@ -38,7 +39,10 @@ public class ConnectionFactory {
 			System.out.println("Unable to make connection");
 			e.printStackTrace();
 		}
-		
+		if(conn!=null)
+		{
+			System.out.println("Working!!");
+		}
 		return conn;
 		
 	}

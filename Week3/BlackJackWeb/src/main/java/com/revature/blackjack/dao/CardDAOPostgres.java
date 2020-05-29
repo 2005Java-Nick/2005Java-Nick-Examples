@@ -11,13 +11,14 @@ import com.revature.util.ConnectionFactory;
 
 public class CardDAOPostgres implements CardDAO {
 
-	private static final String GET_ALL_CARDS_QUERY = "Select * from cards";
+	private static final String GET_ALL_CARDS_QUERY = "Select * from blackjack.cards";
 
 	public List<Card> getAllCards() {
 
 		List<Card> cardList = new LinkedList<Card>();
 
-		try (Connection conn = ConnectionFactory.getConnection();) {
+		try { 
+			Connection conn = ConnectionFactory.getConnection();
 			ResultSet rs = conn.prepareStatement(GET_ALL_CARDS_QUERY).executeQuery();
 			while (rs.next()) {
 				cardList.add(new Card(rs.getInt("cards_value"),  rs.getString("cards_face"), rs.getString("cards_suit"))); 
