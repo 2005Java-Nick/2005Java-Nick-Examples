@@ -37,8 +37,10 @@ public class AuthenticationServlet extends HttpServlet {
 		Player player = playerService.getPlayerByUsername(request.getParameter("username"));
 		HttpSession sess = request.getSession(true);
 		sess.setAttribute("user", player);
-		response.getWriter().write(new ObjectMapper().writeValueAsString(player));
 		response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+		response.getWriter().write(new ObjectMapper().writeValueAsString(player));
+
 	}
 
 }

@@ -12,10 +12,13 @@ export class AuthenticationService {
   private readonly LOGIN_URL = environment.serviceUrl + environment.loginEndpoint;
 
   authenticate(username, password) {
-    return this.http.post<Player>(this.LOGIN_URL, 'username=' + username, {
+    return this.http.post<Player>(
+      this.LOGIN_URL,
+      'username=' + username, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-      }
+      },
+      withCredentials: true
     });
   }
 
