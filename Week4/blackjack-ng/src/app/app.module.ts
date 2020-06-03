@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { CardComponent } from './component/card/card.component';
@@ -33,7 +33,12 @@ import { AuthenticationInterceptor } from './AuthenticationInterceptor';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [AuthenticationInterceptor],
+  providers:
+  [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthenticationInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

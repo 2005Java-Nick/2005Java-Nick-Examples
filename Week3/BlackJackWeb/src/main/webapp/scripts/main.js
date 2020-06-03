@@ -113,7 +113,7 @@ function getBlackJackGame() {
     }
 
     //3. open request
-    xhr.open("GET", "api/startgame?user=DoomSlayer");
+    xhr.open("POST", "api/startgame?user=DoomSlayer");
     //4. send it
     xhr.send();
 
