@@ -30,7 +30,7 @@ public class CardServiceImp implements CardService {
 	public List<Card> getRandomCards(int number) {
 		List<Card> cards = cardDao.getAllCards();
 		Collections.shuffle(cards);
-		return cards.subList(0, number-1);
+		return cards.subList(0, number);
 	}
 
 	public void createCard(Card card) {
@@ -39,6 +39,10 @@ public class CardServiceImp implements CardService {
 
 	public void deleteCard(Card card) {
 		cardDao.deleteCard(card);
+	}
+
+	public void updateCard(Card card) {
+		cardDao.updateCard(card);
 	}
 
 }

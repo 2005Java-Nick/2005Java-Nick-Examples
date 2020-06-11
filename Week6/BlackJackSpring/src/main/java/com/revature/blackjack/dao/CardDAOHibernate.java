@@ -80,4 +80,12 @@ public class CardDAOHibernate implements CardDAO{
 		tx.commit();
 		sess.close();
 	}
+
+	public void updateCard(Card card) {
+		Session sess = sf.openSession();
+		Transaction tx = sess.beginTransaction();
+		sess.update(card);
+		tx.commit();
+		sess.close();
+	}
 }

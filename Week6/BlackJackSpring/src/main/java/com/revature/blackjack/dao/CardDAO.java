@@ -13,5 +13,7 @@ public interface CardDAO {
 	public void createCard(Card card);
 	
 	public void deleteCard(Card card);
+	
+	public void updateCard(Card card);
 
 }
