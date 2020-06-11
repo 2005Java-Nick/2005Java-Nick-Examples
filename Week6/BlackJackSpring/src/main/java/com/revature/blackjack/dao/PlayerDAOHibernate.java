@@ -13,6 +13,7 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.revature.blackjack.domain.Card;
 import com.revature.blackjack.domain.Player;
 import com.revature.util.SessionFactoryUtil;
 
@@ -24,11 +25,6 @@ public class PlayerDAOHibernate implements PlayerDAO {
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sf = sessionFactory;
-	}
-
-	public void savePlayer(Player p) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public Player getPlayer(String playerName) {
@@ -51,6 +47,55 @@ public class PlayerDAOHibernate implements PlayerDAO {
 		} else {
 			return players.get(0);
 		}
+	}
+
+	public List<Player> getAllPlayers() {
+		Session sess = sf.openSession();
+		Transaction tx = sess.beginTransaction();
+		CriteriaBuilder cb = sess.getCriteriaBuilder();
+		CriteriaQuery<Player> cq = cb.createQuery(Player.class);
+		Root<Player> rootEntry = cq.from(Player.class);
+		CriteriaQuery<Player> all = cq.select(rootEntry);
+		TypedQuery<Player> allQuery = sess.createQuery(all);
+		return allQuery.getResultList();
+	}
+
+	public void createPlayer(Player player) {
+		Session sess = sf.openSession();
+		Transaction tx = sess.beginTransaction();
+		sess.save(player);
+		tx.commit();
+		sess.close();
+	}
+
+	public void deletePlayer(Player player) {
+		System.out.println("In delete player DAO");
+		Session sess = sf.openSession();
+		Transaction tx = sess.beginTransaction();
+		sess.delete(player);
+		System.out.println("After delete");
+		tx.commit();
+		sess.close();
+	}
+
+	public void updatePlayer(Player player) {
+		Session sess = sf.openSession();
+		Transaction tx = sess.beginTransaction();
+		sess.update(player);
+		tx.commit();
+		sess.close();
+	}
+
+	public List<Player> getPlayersByTokens(int tokens) {
+		Session sess = sf.openSession();
+		Transaction tx = sess.beginTransaction();
+		CriteriaBuilder cb = sess.getCriteriaBuilder();
+		CriteriaQuery<Player> cq = cb.createQuery(Player.class);
+		Root<Player> rootEntry = cq.from(Player.class);
+		CriteriaQuery<Player> all = cq.select(rootEntry).where(cb.equal(rootEntry.get("tokens"), tokens));
+		TypedQuery<Player> allQuery = sess.createQuery(all);
+
+		return allQuery.getResultList();
 	}
 
 }

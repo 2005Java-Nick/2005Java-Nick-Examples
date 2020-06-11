@@ -21,8 +21,10 @@ import com.revature.blackjack.exception.ScoreLessThanZeroException;
 //What is an object? instance variables and methods
 //State and Behavior
 @Entity
-@Table(name = "player")
+@Table(name = "blackjack.player")
 public class Player implements Serializable {
+
+	private static final long serialVersionUID = 8493457455365359788L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,19 +32,26 @@ public class Player implements Serializable {
 	private int id;
 	
 	@ManyToMany()
-	@JoinTable(name = "hand",
+	@JoinTable(name = "blackjack.hand",
 	joinColumns = @JoinColumn(name = "player_id"),
 	inverseJoinColumns = {@JoinColumn(name = "cards_face"), @JoinColumn(name = "cards_suit")})
 	private List<Card> hand;
-
+	
 	@Column(name = "player_score")
 	private int score;
 	
 	@Column(name = "player_name")
 	private String name;
 	
+	@Column(name = "player_type")
+	private String playerType;
+
 	@Column(name = "player_tokens")
 	private int tokens;
+	/*
+	@Column(name = "game_id")
+	private int gameId;
+    */
 	
 	//Logs allow us to have a record of what is happening in our program
 	//Logging levels include: Fatal, Error, Warn, Debug, Info, & Trace
@@ -52,6 +61,7 @@ public class Player implements Serializable {
 	public void drawCard(Card card) throws ScoreLessThanZeroException {
 		this.drawCard(this.getHand().size(), card);
 	}
+	
 	
 	public void drawCard(int index, Card card) throws ScoreLessThanZeroException {
 
@@ -104,7 +114,7 @@ public class Player implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + hand.hashCode();
+		//result = prime * result + hand.hashCode();
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + score;
 		return result;
@@ -154,14 +164,6 @@ public class Player implements Serializable {
 	public int getScore() {
 		return this.score;
 	}
-
-	public List<Card> getHand() {
-		return hand;
-	}
-
-	private void setHand(List<Card> hand) {
-		this.hand = hand;
-	}
 	
 	public int getTokens() {
 		return tokens;
@@ -173,9 +175,42 @@ public class Player implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Player [hand=" + hand + ", score=" + score + ", name=" + name + ", tokens=" + tokens + "]";
+		return "Player [hand=" +hand+ ", score=" + score + ", name=" + name + ", tokens=" + tokens + "]";
 	}
 
-	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getPlayerType() {
+		return playerType;
+	}
+
+	public void setPlayerType(String playerType) {
+		this.playerType = playerType;
+	}
+
+
+	public List<Card> getHand() {
+		return hand;
+	}
+
+
+	public void setHand(List<Card> hand) {
+		this.hand = hand;
+	}
+	/*
+	public int getGameId() {
+		return gameId;
+	}
+
+
+	public void setGameId(int gameId) {
+		this.gameId = gameId;
+	}*/
 
 }

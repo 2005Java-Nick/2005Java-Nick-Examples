@@ -22,7 +22,7 @@ public class SessionFactoryUtil {
 
 	private static String password;
 
-	private static final String DB_NAME = "nick_2005_db";
+	private static final String DB_NAME = "postgres";
 
 	public SessionFactory getSessionFactory() {
 		return this.sf;
@@ -45,9 +45,10 @@ public class SessionFactoryUtil {
 			settings.put("hibernate.connection.driver_class", "org.postgresql.Driver");
 			settings.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 			settings.put("hibernate.connection.url",
-					"jdbc:postgresql://" + System.getenv("2005_POSTGRES_URL") + ":5432/" + "nick_2005_db" + "?");
+					"jdbc:postgresql://" + System.getenv("2005_POSTGRES_URL") + ":5432/" + "postgres" + "?");
 			settings.put("hibernate.connection.username", System.getenv("2005_POSTGRES_USERNAME"));
 			settings.put("hibernate.connection.password", System.getenv("2005_POSTGRES_PASSWORD"));
+			settings.put("hibernate.show_sql", "true");
 
 			StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder().applySettings(settings)
 					.build();

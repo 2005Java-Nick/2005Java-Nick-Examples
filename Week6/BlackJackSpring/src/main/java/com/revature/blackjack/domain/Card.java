@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cards")
+@Table(name = "blackjack.cards")
 public class Card implements Serializable{
 	
 	private static final long serialVersionUID = 3635551378827905726L;
