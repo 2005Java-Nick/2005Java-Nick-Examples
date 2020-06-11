@@ -26,7 +26,12 @@ public class CardController {
 	
 	@RequestMapping(path = "/card", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Card> getAllCards() {
+	public List<Card> getAllCards(@RequestParam(name = "value", required = false) Integer value) {
+		
+		if (value != null) {
+			return cardService.getCardsByValue(value);
+		}
+		
 		return cardService.getAllCards();
 	}
 	
@@ -62,4 +67,5 @@ public class CardController {
 	public Card getCard(@PathVariable String suit, @PathVariable String face) {
 		return cardService.getCard(face, suit);
 	}
+	
 }

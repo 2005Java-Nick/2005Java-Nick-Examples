@@ -17,5 +17,7 @@ public interface CardService {
 	public void deleteCard(Card card);
 	
 	public void updateCard(Card card);
+	
+	public List<Card> getCardsByValue(int value);
 
 }

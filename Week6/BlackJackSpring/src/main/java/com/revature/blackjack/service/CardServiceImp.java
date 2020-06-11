@@ -45,4 +45,8 @@ public class CardServiceImp implements CardService {
 		cardDao.updateCard(card);
 	}
 
+	public List<Card> getCardsByValue(int value) {
+		return cardDao.getCardsByValue(value);
+	}
+
 }
