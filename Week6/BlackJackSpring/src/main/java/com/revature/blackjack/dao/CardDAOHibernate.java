@@ -40,7 +40,7 @@ public class CardDAOHibernate implements CardDAO{
 		 * can accept HQL (Hibernate Query Language)
 		 * 
 		*/
-		Session sess = sf.getCurrentSession();
+		Session sess = sf.openSession();
 		
 		Transaction tx = sess.beginTransaction();
 		
