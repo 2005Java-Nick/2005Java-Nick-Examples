@@ -17,12 +17,12 @@ public class PlayerServiceImp implements PlayerService{
 	public void setCardDao(PlayerDAO playerDao) {
 		this.playerDao = playerDao;
 	}
-	
+
 	public List<Player> getAllPlayers() {
-		
+		System.out.println("-------------------------------------in hereeeeeee");
 		return playerDao.getAllPlayers();
 	}
-
+	
 	public Player getPlayer(String playerName) {
 		// TODO Auto-generated method stub
 		return playerDao.getPlayer(playerName);

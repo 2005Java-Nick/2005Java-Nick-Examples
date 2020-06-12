@@ -1,18 +1,13 @@
 package com.revature.blackjack.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.revature.blackjack.domain.Card;
 import com.revature.blackjack.domain.Player;
 import com.revature.blackjack.service.PlayerService;
 
@@ -33,9 +28,7 @@ public class PlayerController {
 		if (tokens != null) {
 			return playerService.getPlayersByTokens(tokens);
 		}
-		List<Player> list=playerService.getAllPlayers();
-		System.out.println(list.get(0));
-		return list;
+		return playerService.getAllPlayers();
 	}
 	
 	@RequestMapping(path = "/player", method = RequestMethod.DELETE)
