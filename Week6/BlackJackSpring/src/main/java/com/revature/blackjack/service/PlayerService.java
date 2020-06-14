@@ -1,10 +1,10 @@
-package com.revature.blackjack.dao;
+package com.revature.blackjack.service;
 
 import java.util.List;
 
 import com.revature.blackjack.domain.Player;
 
-public interface PlayerDAO {
+public interface PlayerService {
 	
 	public List<Player> getAllPlayers();
 	
@@ -17,5 +17,5 @@ public interface PlayerDAO {
 	public void updatePlayer(Player player);
 	
 	public List<Player> getPlayersByTokens(int tokens);
-
+	
 }

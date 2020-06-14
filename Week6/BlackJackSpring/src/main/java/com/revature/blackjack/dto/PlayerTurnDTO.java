@@ -10,6 +10,7 @@ public class PlayerTurnDTO {
 	
 	private Card nextCard;
 	private int next;
+	
 	public PlayerTurnDTO(Player player, int next) {
 
 		this.setNextCard(player.getHand().get(next));
