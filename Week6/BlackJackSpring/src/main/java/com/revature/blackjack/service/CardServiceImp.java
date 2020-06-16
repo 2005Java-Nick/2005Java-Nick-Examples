@@ -3,6 +3,7 @@ package com.revature.blackjack.service;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import com.revature.blackjack.dao.CardDAO;
 import com.revature.blackjack.domain.Card;
 
 @Service
-public class CardServiceImp implements CardService {
+public class CardServiceImp implements CardService, BeanNameAware {
 
 	private CardDAO cardDao;
 	
@@ -47,6 +48,12 @@ public class CardServiceImp implements CardService {
 
 	public List<Card> getCardsByValue(int value) {
 		return cardDao.getCardsByValue(value);
+	}
+
+	public void setBeanName(String name) {
+		
+		System.out.println("Setting name for " + name + " bean");
+		
 	}
 
 }

@@ -11,7 +11,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class SessionFactoryUtil {
 	
 	private SessionFactory sf;
