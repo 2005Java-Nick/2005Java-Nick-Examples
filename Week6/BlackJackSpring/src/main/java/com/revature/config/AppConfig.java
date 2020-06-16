@@ -22,14 +22,9 @@ import com.revature.util.SessionFactoryUtil;
 @EnableTransactionManagement
 public class AppConfig {
 
-	private SessionFactoryUtil sessionFactoryUtil;
+	private SessionFactory sessionFactory;
 	
 	private static final String DB_NAME = "nick_2005_db";
-	
-	@Autowired
-	public void setSessionFactoryUtil(SessionFactoryUtil sessionFactoryUtil) {
-		this.sessionFactoryUtil = sessionFactoryUtil;
-	}
 	
 	@Bean
 	public BasicDataSource myDataSource() {
@@ -42,24 +37,25 @@ public class AppConfig {
 	}
 	
 	@Bean
-	public SessionFactory mySessionFactory() {
+	@Scope("singleton")
+	public LocalSessionFactoryBean mySessionFactory() {
 		LocalSessionFactoryBean sf = new LocalSessionFactoryBean();
 		
 		sf.setDataSource(myDataSource());
-		sf.setPackagesToScan("com.revature.blackjack.domain");
+		sf.setPackagesToScan("com.revature.blackjack");
 		Properties prop = new Properties();
 		prop.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 		prop.setProperty("hibernate.show_sql", "true");
 		prop.setProperty("hibernate.format_sql", "true");
 		sf.setHibernateProperties(prop);
 		
-		return (SessionFactory) sf;
+		return sf;
 	}
 	
 	@Bean
 	public HibernateTransactionManager transactionManager() {
 		HibernateTransactionManager tx = new HibernateTransactionManager();
-		tx.setSessionFactory(mySessionFactory());
+		tx.setSessionFactory(mySessionFactory().getObject());
 		
 		return tx;
 	}

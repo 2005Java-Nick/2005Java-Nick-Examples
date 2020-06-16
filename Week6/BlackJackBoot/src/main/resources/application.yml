@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: blackjack-app
+  datasource:
+    url: jdbc:postgresql://${2005_POSTGRES_URL}:5432/nick_2005_db?
+    username: ${2005_POSTGRES_USERNAME}
+    password: ${2005_POSTGRES_PASSWORD}
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show-sql: true
+        format-sql: true
+  

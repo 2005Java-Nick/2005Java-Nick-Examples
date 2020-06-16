@@ -13,12 +13,16 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.blackjack.domain.Card;
 import com.revature.blackjack.domain.CardId;
 import com.revature.util.SessionFactoryUtil;
 
 @Component
+@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.SERIALIZABLE)
 public class CardDAOHibernate implements CardDAO {
 
 	private SessionFactory sf;
@@ -28,6 +32,7 @@ public class CardDAOHibernate implements CardDAO {
 		this.sf = sessionFactory;
 	}
 
+	//@Transactional
 	public List<Card> getAllCards() {
 
 		/*
@@ -40,9 +45,7 @@ public class CardDAOHibernate implements CardDAO {
 		 * (Hibernate Query Language)
 		 * 
 		 */
-		Session sess = sf.openSession();
-
-		Transaction tx = sess.beginTransaction();
+		Session sess = sf.getCurrentSession();
 
 		CriteriaBuilder cb = sess.getCriteriaBuilder();
 		CriteriaQuery<Card> cq = cb.createQuery(Card.class);
@@ -55,43 +58,25 @@ public class CardDAOHibernate implements CardDAO {
 
 	public void createCard(Card c) {
 
-		Session sess = sf.openSession();
-		Transaction tx = sess.beginTransaction();
-		sess.save(c);
-		tx.commit();
-		sess.close();
+		sf.getCurrentSession().save(c);
 
 	}
 
 	public Card getCard(String face, String suit) {
 
-		Session sess = sf.openSession();
-		Card c = sess.get(Card.class, new CardId(face, suit));
-		sess.close();
-		return c;
-
+		return sf.getCurrentSession().get(Card.class, new CardId(face, suit));
 	}
 
 	public void deleteCard(Card card) {
-		Session sess = sf.openSession();
-		Transaction tx = sess.beginTransaction();
-		sess.delete(card);
-		tx.commit();
-		sess.close();
+		sf.getCurrentSession().delete(card);
 	}
 
 	public void updateCard(Card card) {
-		Session sess = sf.openSession();
-		Transaction tx = sess.beginTransaction();
-		sess.update(card);
-		tx.commit();
-		sess.close();
+		sf.getCurrentSession().update(card);
 	}
 
 	public List<Card> getCardsByValue(int value) {
-		Session sess = sf.openSession();
-
-		Transaction tx = sess.beginTransaction();
+		Session sess = sf.getCurrentSession();
 
 		CriteriaBuilder cb = sess.getCriteriaBuilder();
 		CriteriaQuery<Card> cq = cb.createQuery(Card.class);
