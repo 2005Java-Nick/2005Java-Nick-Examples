@@ -1,8 +1,7 @@
-package com.revature.PlayerService;
+package com.example.demo;
 
 import java.util.List;
 
-import com.revature.domain.Player;
 
 
 

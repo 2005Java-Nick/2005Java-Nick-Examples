@@ -1,4 +1,4 @@
-package com.revature.PlayerServiceController;
+package com.example.demo;
 
 import java.util.List;
 
@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.PlayerService.PlayerService;
-import com.revature.domain.Player;
 
 @RestController
 public class PlayerController {
@@ -24,12 +22,12 @@ public class PlayerController {
 	public void setPlayerService(PlayerService playerService) {
 		this.playerService = playerService;
 	}	
-	@GetMapping("/Player")
+	@GetMapping("/player")
 	public List<Player> getAllPlayers() {
 		return playerService.getAllPlayers();
 	}	
-	@GetMapping("/Player/{suit}/face/{face}")
-	public Player getPlayer(@PathParam("id")int id) {
+	@GetMapping("/player/{id}")
+	public Player getPlayer(@PathParam("id")Integer id) {
 		return playerService.getPlayerById(id);
 	}	
 	@PostMapping("/player")
@@ -37,12 +35,12 @@ public class PlayerController {
 		playerService.createPlayer(player);
 		return "Player successfully created";
 	}	
-	@PutMapping("/Player")
+	@PutMapping("/player")
 	public String updatePlayer(@RequestBody Player player) {
 		playerService.updatePlayer(player);
 		return "Player successfully updated";
 	}	
-	@DeleteMapping("/Player/{suit}/face/{face}")
+	@DeleteMapping("/player/{id}")
 	public String deletePlayer(@PathParam("id") int id) {
 		Player player = new Player();
 		player.setId(id);

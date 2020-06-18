@@ -1,10 +1,9 @@
-package com.revature.repo;
+package com.example.demo;
 
 import org.springframework.data.jpa.repository.*;
+import org.springframework.stereotype.Repository;
 
-import com.revature.domain.Player;
-
-
+@Repository
 public interface PlayerRepo extends JpaRepository<Player, Integer> {
 
 }

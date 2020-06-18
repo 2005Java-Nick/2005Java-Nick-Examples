@@ -1,4 +1,4 @@
-package com.revature.Exception;
+package com.example.demo;
 
 public class ScoreLessThanZeroException extends Exception {
 	

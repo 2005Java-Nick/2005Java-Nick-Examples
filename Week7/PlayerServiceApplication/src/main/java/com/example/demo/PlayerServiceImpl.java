@@ -1,11 +1,11 @@
-package com.revature.PlayerService;
+package com.example.demo;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import com.revature.domain.Player;
-import com.revature.repo.PlayerRepo;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PlayerServiceImpl implements PlayerService{
 private PlayerRepo playerRepo;
 	
