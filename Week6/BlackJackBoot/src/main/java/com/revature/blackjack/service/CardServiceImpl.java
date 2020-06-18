@@ -52,7 +52,7 @@ public class CardServiceImpl implements CardService {
 	@Override
 	public List<Card> getCardsByValue(int value) {
 		// TODO Auto-generated method stub
-		return null;
+		return cardRepo.findByValue(value);
 	}
 
 }
