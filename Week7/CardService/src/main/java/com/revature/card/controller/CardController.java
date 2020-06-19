@@ -7,6 +7,7 @@ import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +32,7 @@ public class CardController {
 	}
 	
 	@GetMapping("/card/{suit}/face/{face}")
-	public Card getCard(@PathParam("suit") String suit, @PathParam("face") String face) {
+	public Card getCard(@PathVariable("suit") String suit, @PathVariable("face") String face) {
 		return cardService.getCardByFaceSuit(face, suit);
 	}
 	

@@ -16,5 +16,7 @@ public List<Player> getAllPlayers();
 	public void updatePlayer(Player player);
 	
 	public void deletePlayer(Player player);
+	
+	public PlayerDTO getPlayerDTO(Player player);
 
 }

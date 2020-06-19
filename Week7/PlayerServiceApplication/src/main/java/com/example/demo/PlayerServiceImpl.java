@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,22 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PlayerServiceImpl implements PlayerService{
-private PlayerRepo playerRepo;
+
+	private PlayerRepo playerRepo;
+
+	private CardService cardService;
+	
+	private PlayerCardRepo playerCardRepo;
+	
+	@Autowired
+	public void setPlayerCardRepo (PlayerCardRepo playerCardRepo) {
+		this.playerCardRepo = playerCardRepo;
+	}
+	
+	@Autowired
+	public void setCardService(CardService cardService) {
+		this.cardService = cardService;
+	}
 	
 	@Autowired
 	public void setPlayerRepo(PlayerRepo playerRepo) {
@@ -26,7 +42,12 @@ private PlayerRepo playerRepo;
 
 	@Override
 	public void createPlayer(Player player) {
-		playerRepo.save(player);
+		
+		Player newPlayer = playerRepo.save(player);
+		for (PlayerCard pc: player.getHand()) {
+			pc.setPlayer(newPlayer);
+			playerCardRepo.save(pc);
+		}
 	}
 
 	@Override
@@ -42,5 +63,26 @@ private PlayerRepo playerRepo;
 		
 	}
 
+	@Override
+	public PlayerDTO getPlayerDTO(Player player) {
+		
+		PlayerDTO pDTO = new PlayerDTO();
+		pDTO.setName(player.getName());
+		pDTO.setPlayerId(player.getId());
+		pDTO.setScore(player.getScore());
+		pDTO.setTokens(player.getTokens());
+		List<Card> hand = new LinkedList<>();
+		
+		for (PlayerCard pc : player.getHand()) {
+			hand.add(cardService.getCardByFaceSuit(pc.getFace(), pc.getSuit()));
+		}
+		pDTO.setHand(hand);
+		
+		
+		return pDTO;
+		
+	}
+
+	
 
 }

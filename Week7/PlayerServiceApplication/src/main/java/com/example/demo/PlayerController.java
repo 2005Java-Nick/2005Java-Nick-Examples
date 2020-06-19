@@ -7,6 +7,7 @@ import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,9 @@ public class PlayerController {
 	PlayerService playerService;
 	
 	@Autowired
+	PlayerCardRepo pcr;
+	
+	@Autowired
 	public void setPlayerService(PlayerService playerService) {
 		this.playerService = playerService;
 	}	
@@ -27,8 +31,8 @@ public class PlayerController {
 		return playerService.getAllPlayers();
 	}	
 	@GetMapping("/player/{id}")
-	public Player getPlayer(@PathParam("id")Integer id) {
-		return playerService.getPlayerById(id);
+	public PlayerDTO getPlayer(@PathVariable("id")Integer id) {
+		return playerService.getPlayerDTO(playerService.getPlayerById(id));
 	}	
 	@PostMapping("/player")
 	public String createPlayer(@RequestBody Player player) {
@@ -46,6 +50,11 @@ public class PlayerController {
 		player.setId(id);
 		playerService.deletePlayer(player);
 		return "Player successfully deleted";
+	}
+	
+	@GetMapping("/playercard")
+	public List<PlayerCard> getAllPlayerCard() {
+		return pcr.findAll();
 	}
 
 }

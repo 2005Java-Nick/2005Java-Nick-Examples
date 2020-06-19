@@ -3,11 +3,26 @@ server:
 spring:
   application:
     name: zuul
+    
+#Local Routes
+#zuul:
+#  routes:
+#    card:
+#      url: http://localhost:10001
+#      strip-prefix: false
+#    player:
+#      url: http://localhost:10002
+#      strip-prefix: false
+
+#Full Discover Routes Through Eureka
 zuul:
   routes:
     card:
-      url: http://localhost:10001
+      path: /card/**
+      service-id: card-service
       strip-prefix: false
     player:
-      url: http://localhost:10002
+      path: /player/**
+      service-id: player-service
       strip-prefix: false
+      

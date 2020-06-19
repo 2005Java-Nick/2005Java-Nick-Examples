@@ -1,18 +1,21 @@
 package com.example.demo;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 
@@ -20,6 +23,7 @@ import javax.persistence.Table;
 //State and Behavior
 @Entity
 @Table(name = "player")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property ="id")
 public class Player implements Serializable {
 
 	/**
@@ -40,6 +44,9 @@ public class Player implements Serializable {
 	
 	@Column(name = "player_tokens")
 	private int tokens;
+	
+	@OneToMany(mappedBy = "player", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, targetEntity = PlayerCard.class)
+	List<PlayerCard> hand;
 
 	public int getId() {
 		return id;
@@ -77,10 +84,26 @@ public class Player implements Serializable {
 		return serialVersionUID;
 	}
 
+	public Player(int id, int score, String name, int tokens, List<PlayerCard> hand) {
+		super();
+		this.id = id;
+		this.score = score;
+		this.name = name;
+		this.tokens = tokens;
+		this.hand = hand;
+	}
+
+	@Override
+	public String toString() {
+		return "Player [id=" + id + ", score=" + score + ", name=" + name + ", tokens=" + tokens + ", hand=" + hand
+				+ "]";
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((hand == null) ? 0 : hand.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + score;
@@ -97,6 +120,11 @@ public class Player implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Player other = (Player) obj;
+		if (hand == null) {
+			if (other.hand != null)
+				return false;
+		} else if (!hand.equals(other.hand))
+			return false;
 		if (id != other.id)
 			return false;
 		if (name == null) {
@@ -111,17 +139,12 @@ public class Player implements Serializable {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "Player [id=" + id + ", score=" + score + ", name=" + name + ", tokens=" + tokens + "]";
+	public List<PlayerCard> getHand() {
+		return hand;
 	}
 
-	public Player(int id, int score, String name, int tokens) {
-		super();
-		this.id = id;
-		this.score = score;
-		this.name = name;
-		this.tokens = tokens;
+	public void setHand(List<PlayerCard> hand) {
+		this.hand = hand;
 	}
 
 	public Player() {

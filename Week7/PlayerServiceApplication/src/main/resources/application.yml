@@ -1,1 +1,1 @@
-server:  port: 10002spring:  application:    name: player-service
+server:  port: 10007spring:  application:    name: player-service  h2:    console:      enabled: true      path: /h2-console
