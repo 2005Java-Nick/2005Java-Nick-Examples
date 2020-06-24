@@ -1,0 +1,4 @@
+applications:
+- name: njj-card-service
+  path: target/CardService-0.0.1-SNAPSHOT.jar
+  memory: 1G
